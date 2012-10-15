@@ -19,5 +19,4 @@ public class testUnit {
     public void verifyInequalityCategoryOfInchAndTSP(){
         assertThat(Unit.INCHES.sameCategoryTo(Unit.TSP), is(false));
     }
-
 }
