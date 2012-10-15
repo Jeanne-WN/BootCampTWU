@@ -1,45 +1,30 @@
-//Understands the different units of measurement
+//Understands the result of determining the ratio of a physical quantity
 public class Measurement {
 
     private int value;
     private Unit unit;
 
-    public Measurement(int value,Unit unit)
-    {
-        this.value=value;
-        this.unit=unit;
-
-
+    public Measurement(int value, Unit unit) {
+        this.value = value;
+        this.unit = unit;
     }
-
-
-    public int getValue()
-    {
-        return value;
-    }
-
-    public Measurement ToBase()
-    {
-
-        return new Measurement(unit.toBase(value),Unit.INCHES);
-    }
-
-
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
 
-        Measurement that = (Measurement) o;
+        Measurement otherMeasurement = (Measurement) other;
 
-        return ( this.ToBase().value== that.ToBase().value);
+        if (! this.unit.sameCategoryTo(otherMeasurement.unit)) return false;
 
-
+        return this.unit.toBase(value) == otherMeasurement.unit.toBase(otherMeasurement.value);
     }
 
     @Override
     public int hashCode() {
-        return value;
+        int result = unit.toBase(value);
+        result = 31 * result;
+        return result;
     }
 }

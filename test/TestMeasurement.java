@@ -1,48 +1,106 @@
-import junit.framework.Assert;
 import org.junit.Test;
 
-//Ensures the functionality of measurements
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+//Ensures measurement represents the ratio of a physical quantity
 public class TestMeasurement {
 
     @Test
-    public void testCreateInches()
-    {
-        Measurement inches12=new Measurement(12,Unit.INCHES);
-        Assert.assertEquals(12,inches12.getValue());
-
+    public void verifyEqualityOf1InchAndItself() {
+        Measurement oneInch = new Measurement(1, Unit.INCHES);
+        assertThat(oneInch.equals(oneInch), is(true));
     }
 
     @Test
-    public void testCreateFeet(){
-       Measurement feet = new Measurement(1,Unit.FEET);
-        Assert.assertEquals(1, feet.getValue());
-    }
-
-
-    @Test
-    public void testToBase()
-    {
-        Measurement yard = new Measurement(1,Unit.YARD);
-        Assert.assertEquals(36,yard.ToBase().getValue());
-
-    }
-
-
-    @Test
-    public void testEquals()
-    {
-         Measurement inches12=new Measurement(12,Unit.INCHES);
-        Measurement feet1=new Measurement(1,Unit.FEET);
-
-        Assert.assertEquals(true,inches12.equals(feet1));
+    public void verifyInequalityOf1InchAndNull() {
+        Measurement oneInch = new Measurement(1, Unit.INCHES);
+        assertThat(oneInch.equals(null), is(false));
     }
 
     @Test
-    public void ShouldEqual1TBSPAnd3TSP()
-    {
-        Measurement tbsp1=new Measurement(1,Unit.TBSP);
-        Measurement tsp3=new Measurement(3,Unit.TSP);
+    public void verifyInequalityOf1InchAndOtherClass() {
+        Measurement oneInch = new Measurement(1, Unit.INCHES);
+        Integer otherClass = 1;
+        assertThat(oneInch.equals(otherClass), is(false));
+    }
 
-        Assert.assertEquals(true,tbsp1.equals(tsp3));
+    @Test
+    public void verifyInequalityOf1InchAnd2Inches() {
+        Measurement oneInch = new Measurement(1, Unit.INCHES);
+        Measurement twoInches = new Measurement(2, Unit.INCHES);
+        assertThat(oneInch.equals(twoInches), is(false));
+    }
+
+    @Test
+    public void verifySameHashCodeOf1InchAnd1Inch(){
+        Measurement oneInch = new Measurement(1, Unit.INCHES);
+        Measurement otherOneInch = new Measurement(1, Unit.INCHES);
+        assertThat(oneInch.hashCode(), equalTo(otherOneInch.hashCode()));
+    }
+
+    @Test
+    public void verifySameHashCodeOf12InchAnd1Feed(){
+        Measurement twelveInches = new Measurement(12, Unit.INCHES);
+        Measurement oneFeed = new Measurement(1, Unit.FEET);
+        assertThat(twelveInches.hashCode(), equalTo(oneFeed.hashCode()));
+    }
+
+    @Test
+    public void verifyEqualityOf1FeetAnd12Inches() {
+        Measurement twelveInches = new Measurement(12, Unit.INCHES);
+        Measurement oneFeet = new Measurement(1, Unit.FEET);
+        assertThat(twelveInches.equals(oneFeet), is(true));
+    }
+
+    @Test
+    public void verifyEqualityOf3FeetAnd1Yard() {
+        Measurement threeFeet = new Measurement(3, Unit.FEET);
+        Measurement oneYard = new Measurement(1, Unit.YARD);
+        assertThat(threeFeet.equals(oneYard), is(true));
+    }
+
+    @Test
+    public void verifyEqualityOf1TbspAnd3Tsp() {
+        Measurement oneTbsp = new Measurement(1, Unit.TBSP);
+        Measurement threeTsp = new Measurement(3, Unit.TSP);
+        assertThat(oneTbsp.equals(threeTsp), is(true));
+    }
+
+    @Test
+    public void verifyEqualityOf1OzAnd2Tbsp() {
+        Measurement oneOz = new Measurement(1, Unit.OZ);
+        Measurement twoTbsp = new Measurement(2, Unit.TBSP);
+        assertThat(twoTbsp.equals(oneOz), is(true));
+    }
+
+    @Test
+    public void verifyEqualityOf8OzAnd1Cup() {
+        Measurement eightOz = new Measurement(8, Unit.OZ);
+        Measurement oneCup = new Measurement(1, Unit.CUP);
+        assertThat(eightOz.equals(oneCup), is(true));
+    }
+
+    @Test
+    public void verifyInequalityOf1InchAnd1Tsp() {
+        Measurement oneInch = new Measurement(1, Unit.INCHES);
+        Measurement oneTsp = new Measurement(1, Unit.TSP);
+        assertThat(oneInch.equals(oneTsp), is(false));
+    }
+
+    @Test
+    public void verifyInequalityOf1FeetAnd1Tsp(){
+        Measurement oneFeet = new Measurement(1, Unit.FEET);
+        Measurement oneTsp = new Measurement(1, Unit.TSP);
+        assertThat(oneFeet.equals(oneTsp), is(false));
+    }
+
+    @Test
+    public void verifyInequalityOf1YardAnd1Tsp(){
+        Measurement oneYard = new Measurement(1, Unit.YARD);
+        Measurement oneTsp = new Measurement(1, Unit.TSP);
+        assertThat(oneYard.equals(oneTsp), is(false));
     }
 }
+

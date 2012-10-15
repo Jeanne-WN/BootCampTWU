@@ -1,19 +1,21 @@
-//Understands the relationship between units with Inch to make conversion to lowest unit(inch)
+//Understands the relationship between different kinds of units
 public enum Unit {
-
-    INCHES(1),FEET(12),YARD(36),TSP(1),TBSP(3),OZ(6),CUP(48);
+    INCHES(1, "length"), FEET(12, "length"), YARD(36, "length"),
+    TSP(1, "volume"), TBSP(3, "volume"), OZ(6, "volume"), CUP(48, "volume");
 
     private int conversionFactor;
-    private Unit(int conversionFactor)
-    {
-        this.conversionFactor=conversionFactor;
+    private String category;
+
+    private Unit(int conversionFactor, String category) {
+        this.conversionFactor = conversionFactor;
+        this.category = category;
     }
 
-    public int toBase(int value)
-    {
-        return value*conversionFactor;
+    public int toBase(int value) {
+        return value * conversionFactor;
     }
 
-
-
+    public boolean sameCategoryTo(Unit other){
+        return this.category.equals(other.category);
+    }
 }
