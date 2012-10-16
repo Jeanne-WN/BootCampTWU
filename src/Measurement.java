@@ -16,7 +16,7 @@ public class Measurement {
 
         Measurement otherMeasurement = (Measurement) other;
 
-        if (! this.unit.sameCategoryTo(otherMeasurement.unit)) return false;
+        if (! this.unit.isComparable(otherMeasurement.unit)) return false;
 
         return this.unit.toBase(value) == otherMeasurement.unit.toBase(otherMeasurement.value);
     }
@@ -27,4 +27,22 @@ public class Measurement {
         result = 31 * result;
         return result;
     }
+
+    public Measurement add(Measurement otherMeasurement) {
+
+        if( ! this.unit.isComparable(otherMeasurement.unit)) {
+            throw new IllegalArgumentException("Not Comparable!");
+        }
+
+        int otherValue = otherMeasurement.value;
+
+        if (otherMeasurement.unit != this.unit)
+        {
+            int otherValueInBase = otherMeasurement.unit.toBase(otherValue);
+            otherValue = this.unit.fromBase(otherValueInBase);
+        }
+
+        return new Measurement(value + otherValue, this.unit);
+    }
+
 }

@@ -102,5 +102,36 @@ public class TestMeasurement {
         Measurement oneTsp = new Measurement(1, Unit.TSP);
         assertThat(oneYard.equals(oneTsp), is(false));
     }
+
+    @Test
+    public void verifyEqualityOf1KilogramAnd1000Grams(){
+        Measurement oneKilogram = new Measurement(1, Unit.KILOGRAM);
+        Measurement oneThousandGrams = new Measurement(1000, Unit.GRAM);
+        assertThat(oneKilogram.equals(oneThousandGrams), is(true));
+    }
+
+    @Test
+    public void verifyAdditionOf1KilogramAnd1000Grams(){
+        Measurement oneKilogram = new Measurement(1, Unit.KILOGRAM);
+        Measurement oneThousandGrams = new Measurement(1000, Unit.GRAM);
+        Measurement result = new Measurement(2, Unit.KILOGRAM);
+        assertThat(oneKilogram.add(oneThousandGrams).equals(result), is(true));
+    }
+
+    @Test
+    public void verifyAdditionOf2KilogramAnd1000Grams(){
+        Measurement twoKilogram = new Measurement(2, Unit.KILOGRAM);
+        Measurement oneThousandGrams = new Measurement(1000, Unit.GRAM);
+        Measurement result = new Measurement(3, Unit.KILOGRAM);
+        assertThat(twoKilogram.add(oneThousandGrams).equals(result), is(true));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void verifyAdditionOf1KilogramAnd1Yard(){
+        Measurement oneKilogram = new Measurement(1, Unit.KILOGRAM);
+        Measurement oneYard = new Measurement(1, Unit.YARD);
+
+        oneKilogram.add(oneYard);
+    }
 }
 
